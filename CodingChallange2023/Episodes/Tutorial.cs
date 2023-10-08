@@ -159,7 +159,7 @@ namespace CodingChallange2023.Episodes
         [State(StateAttribute.Types.Finished)]
         public static void Story()
         {
-            Console.WriteLine($"\t- By overlaying all three plates on the \"cipher_matrix.png\" we see the following symobls...\n\n");
+            Console.WriteLine($"\t- By overlaying all three plates on the \"cipher_matrix.png\" we see the following symbols...\n\n");
 
             IEnumerable<string> symbols = LoadSymobls();
 
