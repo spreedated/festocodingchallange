@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\01_keymaker_ordered.txt" />
+    <None Remove="Resources\02_crypted.txt" />
+    <None Remove="Resources\02_encryption_matrix.txt" />
+    <None Remove="Resources\03_trap_logs.txt" />
+    <None Remove="Resources\11_keymaker_recipe.txt" />
+    <None Remove="Resources\13_trap_balance.txt" />
+    <None Remove="Resources\hammer_collection.txt" />
+    <None Remove="Resources\story_plates.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\01_keymaker_ordered.txt" />
+    <EmbeddedResource Include="Resources\02_crypted.txt" />
+    <EmbeddedResource Include="Resources\02_encryption_matrix.txt" />
+    <EmbeddedResource Include="Resources\03_trap_logs.txt" />
+    <EmbeddedResource Include="Resources\11_keymaker_recipe.txt" />
+    <EmbeddedResource Include="Resources\13_trap_balance.txt" />
+    <EmbeddedResource Include="Resources\hammer_collection.txt" />
+    <EmbeddedResource Include="Resources\story_plates.txt" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,2 @@
+YXYY; YYXY; N; Q;
+XYXX; XYYX; R; Q;
