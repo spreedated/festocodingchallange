@@ -5,6 +5,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
+    <Title>Festo Coding Challange 2022</Title>
+    <AssemblyTitle>Festo Coding Challange 2022</AssemblyTitle>
   </PropertyGroup>
 
   <ItemGroup>
