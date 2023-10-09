@@ -7,6 +7,7 @@
     <Nullable>disable</Nullable>
     <Title>Festo Coding Challange 2023</Title>
     <AssemblyTitle>Festo Coding Challange 2023</AssemblyTitle>
+    <NoWarn>1701;1702;IDE0063</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,6 +30,10 @@
     <EmbeddedResource Include="Resources\13_trap_balance.txt" />
     <EmbeddedResource Include="Resources\hammer_collection.txt" />
     <EmbeddedResource Include="Resources\story_plates.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TextUserInterface\TextUserInterface.csproj" />
   </ItemGroup>
 
 </Project>
