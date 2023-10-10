@@ -17,6 +17,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextUserInterface", "TextUserInterface\TextUserInterface.csproj", "{DA648CEF-D62B-4A4F-AB1C-B5B551B15D74}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{8FEAE6FB-DC23-44A6-BFF5-C08654DA0FB8}"
+	ProjectSection(SolutionItems) = preProject
+		Libraries\Crayon.dll = Libraries\Crayon.dll
+		Libraries\Crayon.pdb = Libraries\Crayon.pdb
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +43,10 @@ Global
 		{630E860F-00F7-4A16-AAD2-CAA221CC10FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{630E860F-00F7-4A16-AAD2-CAA221CC10FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{630E860F-00F7-4A16-AAD2-CAA221CC10FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA648CEF-D62B-4A4F-AB1C-B5B551B15D74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA648CEF-D62B-4A4F-AB1C-B5B551B15D74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA648CEF-D62B-4A4F-AB1C-B5B551B15D74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA648CEF-D62B-4A4F-AB1C-B5B551B15D74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
