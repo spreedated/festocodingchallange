@@ -1,20 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
+using TextUserInterface.Attributes;
 
-namespace CodingChallange2020.Episodes
+namespace CodingChallange2020.Puzzles
 {
+    [Chapter(1, "Training III")]
+    [State(StateAttribute.Types.Unfinished)]
     internal static class TrainingIII
     {
         private static List<char> permutationList = new();
 
-        public static string DecryptMd5(string startsWith)
+        public static void Solve()
         {
-            var u = GeneratePermutations("ABCabc0123456789");
+            var u = GeneratePermutations("aaa");
+            string found = null;
 
-            return null;
+            foreach (string perm in u)
+            {
+                byte[] md5 = MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(perm));
+
+                if (Convert.ToHexString(md5).ToLower().StartsWith("19acf8371f"))
+                {
+                    found = perm;
+                    break;
+                }
+            }
         }
 
         private static List<string> GeneratePermutations(string input)
