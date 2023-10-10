@@ -36,4 +36,10 @@
     <ProjectReference Include="..\TextUserInterface\TextUserInterface.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Crayon">
+      <HintPath>..\Libraries\Crayon.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

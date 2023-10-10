@@ -1,103 +1,129 @@
-﻿using CodingChallange2023.Attributes;
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using TextUserInterface.Attributes;
+using static TextUserInterface.EngineBasics;
+using static TextUserInterface.HelperFunctions;
 
 namespace CodingChallange2023
 {
     internal static class Program
     {
+        private static Type selectedChapter = null;
+        private static string title = null;
+
         static void Main(string[] args)
         {
-            ShowIntroduction();
-
-            int userinputChapter = GetUserSelection(0,4);
-            string selectedChapter = null;
-            string selectedPuzzle = null;
-
-            switch (userinputChapter)
-            {
-                case 0:
-                    selectedChapter = "Tutorial";
-                    ShowChapterSelection("Tutorial - Titan's Gateway");
-                    break;
-                case 1:
-                    ShowChapterSelection("Chapter 1 - Cosmo Plaza");
-                    selectedChapter = "1";
-                    break;
-                case 2:
-                    ShowChapterSelection("Chapter 2");
-                    selectedChapter = "2";
-                    break;
-                case 3:
-                    ShowChapterSelection("Chapter 3");
-                    selectedChapter = "3";
-                    break;
-                case 4:
-                    ShowChapterSelection("Final Chapter");
-                    selectedChapter = "4";
-                    break;
-            }
-
-            int userinputPuzzle = GetUserSelection(-2,3);
-
+            //DisplayEnd();
+            title = typeof(Program).Assembly.GetCustomAttribute<AssemblyTitleAttribute>().Title;
             Console.Clear();
-
-            switch (userinputPuzzle)
-            {
-                case -2:
-                    //go back
-                    break;
-                case -1:
-                    typeof(Program).Assembly.GetTypes().First(x => x.IsClass && x.Name == selectedChapter).GetMethod("Solve").Invoke(null, null);
-                    break;
-                case 0:
-                    typeof(Program).Assembly.GetTypes().First(x => x.IsClass && x.Name == selectedChapter).GetMethod("Story").Invoke(null,null);
-                    break;
-                case 1:
-                    typeof(Program).Assembly.GetTypes().First(x => x.IsClass && x.Name == selectedChapter).GetMethod("Puzzle1").Invoke(null, null);
-                    break;
-                case 2:
-                    typeof(Program).Assembly.GetTypes().First(x => x.IsClass && x.Name == selectedChapter).GetMethod("Puzzle2").Invoke(null, null);
-                    break;
-                case 3:
-                    typeof(Program).Assembly.GetTypes().First(x => x.IsClass && x.Name == selectedChapter).GetMethod("Puzzle3").Invoke(null, null);
-                    break;
-            }
-
-            int userinputFinished = GetUserSelection(0, 1);
-
-            //Episodes.Tutorial.Solve();
-            //Episodes.Chapter1.Solve();
+            DisplayProgramHeader(title);
+            ChapterSelection();
         }
 
-        private static void ShowIntroduction()
+        private static void ChapterSelection()
+        {
+            IEnumerable<Type> episodes = ShowChapterSelection();
+
+            int min = episodes.Min(x => x.GetCustomAttribute<ChapterAttribute>().Order);
+            int max = episodes.Max(x => x.GetCustomAttribute<ChapterAttribute>().Order);
+
+            int userInput = GetUserSelection(min, max);
+
+            if (userInput >= min && userInput <= max)
+            {
+                selectedChapter = episodes.First(x => x.GetCustomAttribute<ChapterAttribute>().Order == userInput);
+                ShowPuzzleSelection(selectedChapter.GetCustomAttribute<ChapterAttribute>().Chapter);
+                PuzzleSelection();
+                return;
+            }
+
+            ChapterSelection();
+        }
+
+        private static void PuzzleSelection()
+        {
+            switch (GetUserSelection(-2, 3))
+            {
+                case -2:
+                    ChapterSelection();
+                    break;
+                case -1:
+                    Console.Clear();
+                    selectedChapter.GetMethod("Solve").Invoke(null, null);
+                    break;
+                case 0:
+                    Console.Clear();
+                    selectedChapter.GetMethod("Story").Invoke(null, null);
+                    break;
+                case 1:
+                    Console.Clear();
+                    selectedChapter.GetMethod("Puzzle1").Invoke(null, null);
+                    break;
+                case 2:
+                    Console.Clear();
+                    selectedChapter.GetMethod("Puzzle2").Invoke(null, null);
+                    break;
+                case 3:
+                    Console.Clear();
+                    selectedChapter.GetMethod("Puzzle3").Invoke(null, null);
+                    break;
+            }
+
+            DisplaySolutionEnd();
+            ShowPuzzleSelection(selectedChapter.GetCustomAttribute<ChapterAttribute>().Chapter);
+            PuzzleSelection();
+        }
+
+        private static IEnumerable<Type> ShowChapterSelection()
         {
             Console.Clear();
+            DisplayProgramHeader(title);
 
-            string heading = "Festo Coding Challenge 2023";
+            string heading = "Chapter selection";
 
-            Console.WriteLine($"\t\t{heading}");
-            Console.WriteLine($"\t\t{new string('=', heading.Length)}\n\n");
+            Console.WriteLine($"  {heading}");
+            Console.WriteLine($"  {new string('=', heading.Length)}\n");
 
             Console.WriteLine($"\tSelect your Chapter:\n");
 
-            Console.WriteLine($"\t  [0] Tutorial");
-            Console.WriteLine($"\t  [1] Chapter 1");
-            Console.WriteLine($"\t  [2] Chapter 2");
-            Console.WriteLine($"\t  [3] Chapter 3");
-            Console.WriteLine($"\t  [4] Final Chapter");
+            IEnumerable<Type> episodes = typeof(Program).Assembly.GetTypes()
+                .Where(x => x.Namespace.Contains("Episodes") && x.IsClass && x.CustomAttributes.Any(x => x.AttributeType == typeof(ChapterAttribute)))
+                .OrderBy(x => x.GetCustomAttribute<ChapterAttribute>().Order);
+
+            foreach (Type c in episodes)
+            {
+                ChapterAttribute ch = c.GetCustomAttribute<ChapterAttribute>();
+                StateAttribute st = c.GetCustomAttribute<StateAttribute>();
+
+                Console.Write($"\t  [{ch.Order}] {ch.Chapter}");
+                if (st != null)
+                {
+                    WriteColor(st.Type != StateAttribute.Types.Complete ? ConsoleColor.DarkRed : ConsoleColor.DarkGreen, $" [{st.Type}]", false, true);
+                }
+                Console.Write('\n');
+            }
+
             Console.WriteLine($"\n\t  [x] Exit");
+
+            Console.Write("\n\n  Awaiting input: ");
+
+            return episodes;
         }
 
-        private static void ShowChapterSelection(string heading)
+        private static void ShowPuzzleSelection(string heading)
         {
             Console.Clear();
+            DisplayProgramHeader(title);
 
-            Console.WriteLine($"\t\t{heading}");
-            Console.WriteLine($"\t\t{new string('=', heading.Length)}\n\n"); ;
+            Console.WriteLine($"  {heading}");
+            Console.WriteLine($"  {new string('=', heading.Length)}\n");
 
             Console.WriteLine($"\tSelect Puzzle:\n");
 
@@ -107,23 +133,8 @@ namespace CodingChallange2023
             Console.WriteLine($"\t  [2] Puzzle 2");
             Console.WriteLine($"\t  [3] Puzzle 3");
             Console.WriteLine($"\n\t  [r] Return");
-        }
 
-        private static int GetUserSelection(int min, int max)
-        {
-            string input = Console.ReadLine();
-
-            if (input == "x" || input == "X")
-            {
-                Environment.Exit(0);
-            }
-
-            if (!int.TryParse(input, out int intinput) || (intinput > min && intinput < max))
-            {
-                return GetUserSelection(min, max);
-            }
-
-            return intinput;
+            Console.Write("\n\n  Awaiting input: ");
         }
     }
 }

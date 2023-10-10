@@ -1,12 +1,14 @@
-﻿using CodingChallange2023.Attributes;
-using CodingChallange2023.Models;
+﻿using CodingChallange2023.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static CodingChallange2023.HelperFunctions;
+using TextUserInterface.Attributes;
+using static TextUserInterface.HelperFunctions;
 
 namespace CodingChallange2023.Episodes
 {
+    [Chapter(0, "Tutorial - Titan's Gateway")]
+    [State(StateAttribute.Types.Complete)]
     internal static class Tutorial
     {
         public static void Solve()
@@ -21,7 +23,7 @@ namespace CodingChallange2023.Episodes
         }
 
         #region Puzzle 1
-        [State(StateAttribute.Types.Finished)]
+        [State(StateAttribute.Types.Complete)]
         public static void Puzzle1()
         {
             IEnumerable<Key> keys = LoadKeys();
@@ -57,7 +59,7 @@ namespace CodingChallange2023.Episodes
         #endregion
 
         #region Puzzle 2
-        [State(StateAttribute.Types.Finished)]
+        [State(StateAttribute.Types.Complete)]
         public static void Puzzle2()
         {
             IEnumerable<DeviceEncryption> cryptionMatrix = LoadEncryptionMatrix();
@@ -129,7 +131,7 @@ namespace CodingChallange2023.Episodes
         #endregion
 
         #region Puzzle 3
-        [State(StateAttribute.Types.Finished)]
+        [State(StateAttribute.Types.Complete)]
         public static void Puzzle3()
         {
             IEnumerable<Trap> trapList = LoadTrapLog();
@@ -156,7 +158,7 @@ namespace CodingChallange2023.Episodes
         #endregion
 
         #region Story
-        [State(StateAttribute.Types.Finished)]
+        [State(StateAttribute.Types.Complete)]
         public static void Story()
         {
             Console.WriteLine($"\t- By overlaying all three plates on the \"cipher_matrix.png\" we see the following symbols...\n\n");

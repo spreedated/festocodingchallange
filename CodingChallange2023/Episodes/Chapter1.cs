@@ -1,15 +1,17 @@
-﻿using CodingChallange2023.Attributes;
-using CodingChallange2023.Models;
+﻿using CodingChallange2023.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static CodingChallange2023.HelperFunctions;
+using TextUserInterface.Attributes;
+using static TextUserInterface.HelperFunctions;
 
 namespace CodingChallange2023.Episodes
 {
+    [Chapter(1, "Chapter 1 - Cosmo Plaza")]
+    [State(StateAttribute.Types.Unfinished)]
     internal static class Chapter1
     {
         public static void Solve()
@@ -24,7 +26,7 @@ namespace CodingChallange2023.Episodes
         }
 
         #region Puzzle 1
-        [State(StateAttribute.Types.Finished)]
+        [State(StateAttribute.Types.Complete)]
         public static void Puzzle1()
         {
             IEnumerable<Hammer> hammerList = LoadHammers();
@@ -131,7 +133,7 @@ namespace CodingChallange2023.Episodes
         #endregion
 
         #region Puzzle 3
-        [State(StateAttribute.Types.Uncomplete)]
+        [State(StateAttribute.Types.Unfinished)]
         public static void Puzzle3()
         {
             IEnumerable<TrapBalanced> trapList = LoadBalancedTraps();
@@ -140,7 +142,8 @@ namespace CodingChallange2023.Episodes
 
             var ss = trapList.Count(x => x.IsTrapSafe);
             var sss = trapList.Count(x => !x.IsTrapSafe);
-
+            var ssfs = trapList.Where(x => x.IsTrapSafe).Select(y => $"Id: {y.Id} --- {string.Join(' ', y.Left)} = {string.Join(' ', y.Right)}");
+            
             var tt = trapList.Where(x => x.IsTrapSafe).Sum(x => x.Id);
         }
 
