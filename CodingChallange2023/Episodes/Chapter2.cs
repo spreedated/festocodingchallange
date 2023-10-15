@@ -8,7 +8,8 @@ using TextUserInterface.Attributes;
 
 namespace CodingChallange2023.Episodes
 {
-    [Chapter(2, "Chapter 2")]
+    [Chapter(2, "Chapter 2 - Knowledge Forge")]
+    [State(StateAttribute.Types.Empty)]
     internal class Chapter2
     {
         public static void Solve()

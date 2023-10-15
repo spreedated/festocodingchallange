@@ -9,6 +9,7 @@ using TextUserInterface.Attributes;
 namespace CodingChallange2023.Episodes
 {
     [Chapter(3, "Chapter 3")]
+    [State(StateAttribute.Types.Empty)]
     internal class Chapter3
     {
         public static void Solve()
