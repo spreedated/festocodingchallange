@@ -9,6 +9,7 @@ namespace CodingChallange2022
         
         static void Main(string[] args)
         {
+            //Episodes.Intro.Solve();
             Episodes.Episode1.Solve();
         }
     }

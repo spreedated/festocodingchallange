@@ -29,8 +29,8 @@ namespace CodingChallange2022.Episodes
 
             Console.WriteLine($"\t- Loaded {employees.Count()} Employees from \"office_database.txt\"...");
 
-            //Puzzle1();
-            //Puzzle2();
+            Puzzle1();
+            Puzzle2();
             Puzzle3();
         }
 
