@@ -20,7 +20,7 @@ namespace CodingChallange2023
 
         static void Main(string[] args)
         {
-            //DisplayEnd();
+            //DisplayEnd(); //TODO: complete this function
             title = typeof(Program).Assembly.GetCustomAttribute<AssemblyTitleAttribute>().Title;
             Console.Clear();
             DisplayProgramHeader(title);
@@ -45,6 +45,48 @@ namespace CodingChallange2023
             }
 
             ChapterSelection();
+        }
+
+        private static IEnumerable<Type> ShowChapterSelection()
+        {
+            Console.Clear();
+            DisplayProgramHeader(title);
+
+            string heading = "Chapter selection";
+
+            Console.WriteLine($"  {heading}");
+            Console.WriteLine($"  {new string('=', heading.Length)}\n");
+
+            Console.WriteLine($"\tSelect your Chapter:\n");
+
+            IEnumerable<Type> episodes = typeof(Program).Assembly.GetTypes()
+                .Where(x => x.Namespace.Contains("Episodes") && x.IsClass && x.CustomAttributes.Any(x => x.AttributeType == typeof(ChapterAttribute)))
+                .OrderBy(x => x.GetCustomAttribute<ChapterAttribute>().Order);
+
+            foreach (Type c in episodes)
+            {
+                ChapterAttribute ch = c.GetCustomAttribute<ChapterAttribute>();
+                StateAttribute st = c.GetCustomAttribute<StateAttribute>();
+                AuthorsAttribute at = c.GetCustomAttribute<AuthorsAttribute>();
+
+                Console.Write($"\t  [{ch.Order}] {ch.Chapter}");
+                if (st != null)
+                {
+                    WriteColor(st.Type != StateAttribute.Types.Complete ? ConsoleColor.DarkRed : ConsoleColor.DarkGreen, $" [{st.Type}]", false, true);
+                }
+                if (at != null)
+                {
+                    Console.Write($"\n    ");
+                    WriteColor(ConsoleColor.DarkGray, $"\n    by {string.Join(", ", at.Authors)}", false, true);
+                }
+                Console.Write('\n');
+            }
+
+            Console.WriteLine($"\n\t  [x] Exit");
+
+            Console.Write("\n\n  Awaiting input: ");
+
+            return episodes;
         }
 
         private static void PuzzleSelection()
@@ -81,42 +123,6 @@ namespace CodingChallange2023
             PuzzleSelection();
         }
 
-        private static IEnumerable<Type> ShowChapterSelection()
-        {
-            Console.Clear();
-            DisplayProgramHeader(title);
-
-            string heading = "Chapter selection";
-
-            Console.WriteLine($"  {heading}");
-            Console.WriteLine($"  {new string('=', heading.Length)}\n");
-
-            Console.WriteLine($"\tSelect your Chapter:\n");
-
-            IEnumerable<Type> episodes = typeof(Program).Assembly.GetTypes()
-                .Where(x => x.Namespace.Contains("Episodes") && x.IsClass && x.CustomAttributes.Any(x => x.AttributeType == typeof(ChapterAttribute)))
-                .OrderBy(x => x.GetCustomAttribute<ChapterAttribute>().Order);
-
-            foreach (Type c in episodes)
-            {
-                ChapterAttribute ch = c.GetCustomAttribute<ChapterAttribute>();
-                StateAttribute st = c.GetCustomAttribute<StateAttribute>();
-
-                Console.Write($"\t  [{ch.Order}] {ch.Chapter}");
-                if (st != null)
-                {
-                    WriteColor(st.Type != StateAttribute.Types.Complete ? ConsoleColor.DarkRed : ConsoleColor.DarkGreen, $" [{st.Type}]", false, true);
-                }
-                Console.Write('\n');
-            }
-
-            Console.WriteLine($"\n\t  [x] Exit");
-
-            Console.Write("\n\n  Awaiting input: ");
-
-            return episodes;
-        }
-
         private static void ShowPuzzleSelection(string heading)
         {
             Console.Clear();
@@ -127,11 +133,24 @@ namespace CodingChallange2023
 
             Console.WriteLine($"\tSelect Puzzle:\n");
 
-            Console.WriteLine($"\t  [a] Show all!");
-            Console.WriteLine($"\t  [0] Story");
-            Console.WriteLine($"\t  [1] Puzzle 1");
-            Console.WriteLine($"\t  [2] Puzzle 2");
-            Console.WriteLine($"\t  [3] Puzzle 3");
+            MethodInfo[] methods = selectedChapter.GetMethods().Where(x => x.GetCustomAttributes<StateAttribute>().Any()).OrderByDescending(x => x.Name[0]).ThenBy(x => x.Name).ToArray();
+
+            for(int i = 0; i < methods.Length; i++)
+            {
+                StateAttribute st = methods[i].GetCustomAttribute<StateAttribute>();
+                AuthorsAttribute at = methods[i].GetCustomAttribute<AuthorsAttribute>();
+
+                Console.Write($"\t  [{i}] {methods[i].Name}");
+                WriteColor(st.Type != StateAttribute.Types.Complete ? ConsoleColor.DarkRed : ConsoleColor.DarkGreen, $" [{st.Type}]", false, true);
+
+                if (at != null)
+                {
+                    WriteColor(ConsoleColor.DarkGray, $"\n\t    by {string.Join(", ", at.Authors)}", false, true);
+                }
+
+                Console.Write("\n");
+            }
+
             Console.WriteLine($"\n\t  [r] Return");
 
             Console.Write("\n\n  Awaiting input: ");

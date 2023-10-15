@@ -1,12 +1,11 @@
 ﻿using CodingChallange2023.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TextUserInterface.Attributes;
 using static TextUserInterface.HelperFunctions;
+using static CodingChallange2023.Logic.HelperFunctions;
+using static CodingChallange2023.Logic.Constants;
 
 namespace CodingChallange2023.Episodes
 {
@@ -19,7 +18,7 @@ namespace CodingChallange2023.Episodes
             Console.WriteLine("Chapter 1:\n");
             Console.WriteLine("\t\t\"Cosmo Plaza\"\n\n");
 
-            //Puzzle1();
+            Puzzle1();
             Puzzle2();
             Puzzle3();
             Story();
@@ -57,7 +56,7 @@ namespace CodingChallange2023.Episodes
 
             for (int i = 0; i < forgedKeys.Count; i++)
             {
-                Console.WriteLine($"\t- Sequence #{i+1} forges key \"{forgedKeys[i]}\"");
+                Console.WriteLine($"\t- Sequence #{i + 1} forges key \"{forgedKeys[i]}\"");
             }
         }
 
@@ -85,7 +84,7 @@ namespace CodingChallange2023.Episodes
                     forgeSequence.Enqueue(new()
                     {
                         Hammer = Convert.ToInt32(hammerAndPosition[..hammerAndPosition.IndexOf(',')]),
-                        Position = Convert.ToInt32(hammerAndPosition[(hammerAndPosition.IndexOf(',')+1)..].Trim())
+                        Position = Convert.ToInt32(hammerAndPosition[(hammerAndPosition.IndexOf(',') + 1)..].Trim())
                     });
                 }
 
@@ -111,13 +110,13 @@ namespace CodingChallange2023.Episodes
         {
             string key = "A";
 
-            foreach(HammerAndPosition hap in forgeSequence)
+            foreach (HammerAndPosition hap in forgeSequence)
             {
-                if (hap.Position -1 > key.Length-1 || !TryApplyHammer(hap.Hammer, key[hap.Position-1], hammerList, out string transformation))
+                if (hap.Position - 1 > key.Length - 1 || !TryApplyHammer(hap.Hammer, key[hap.Position - 1], hammerList, out string transformation))
                 {
                     return null;
                 }
-                key = key.Remove(hap.Position - 1, 1).Insert(hap.Position-1, transformation);
+                key = key.Remove(hap.Position - 1, 1).Insert(hap.Position - 1, transformation);
             }
 
             return key;
@@ -133,18 +132,18 @@ namespace CodingChallange2023.Episodes
         #endregion
 
         #region Puzzle 3
-        [State(StateAttribute.Types.Unfinished)]
+        [Authors(AUTHOR_SIDEKICK_1)]
+        [State(StateAttribute.Types.Complete)]
         public static void Puzzle3()
         {
             IEnumerable<TrapBalanced> trapList = LoadBalancedTraps();
 
             Console.WriteLine($"\t- Loaded {trapList.Count()} balanced traps from \"13_trap_balance.txt\"...");
 
-            var ss = trapList.Count(x => x.IsTrapSafe);
-            var sss = trapList.Count(x => !x.IsTrapSafe);
-            var ssfs = trapList.Where(x => x.IsTrapSafe).Select(y => $"Id: {y.Id} --- {string.Join(' ', y.Left)} = {string.Join(' ', y.Right)}");
-            
-            var tt = trapList.Where(x => x.IsTrapSafe).Sum(x => x.Id);
+            IEnumerable<TrapBalanced> safeTraps = trapList.Where(x => x.IsTrapSafe);
+
+            Console.WriteLine($"\t- Found {safeTraps.Count()} safe balanced traps from \"13_trap_balance.txt\"...");
+            Console.WriteLine($"\t- The sum of id's from all safe trap is \"{safeTraps.Sum(x => x.Id)}\"...");
         }
 
         private static IEnumerable<TrapBalanced> LoadBalancedTraps()
@@ -169,10 +168,11 @@ namespace CodingChallange2023.Episodes
         #endregion
 
         #region Story
-        [State(StateAttribute.Types.Empty)]
+        [State(StateAttribute.Types.Complete)]
         public static void Story()
         {
-            Console.WriteLine($"\t- By overlaying all three plates on the \"cipher_matrix.png\" we see the following symobls...\n\n");
+            Console.WriteLine($"\t- By overlaying all three plates on the \"cipher_matrix.png\" we see the following symbols...\n\n");
+            EchoSymbols(LoadSymoblsFromEmbeddedFile("story_plates_c1"));
         }
         #endregion
     }
