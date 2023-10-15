@@ -3,7 +3,7 @@
 namespace TextUserInterface.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class ChapterAttribute : Attribute
+    public sealed class ChapterAttribute : Attribute
     {
         public int Order { get; init; }
         public string Chapter { get; init; }
