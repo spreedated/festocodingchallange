@@ -60,19 +60,6 @@ namespace CodingChallange2023.Episodes
             }
         }
 
-        private static IEnumerable<Hammer> LoadHammers()
-        {
-            foreach (string line in LoadEmbeddedFile("hammer_collection").Split('\n').Where(x => !string.IsNullOrEmpty(x)))
-            {
-                yield return new()
-                {
-                    Index = Convert.ToInt32(line[..line.IndexOf('.')]),
-                    HammerType = line[(line.IndexOf(' ') + 1)..][0],
-                    ConvertTo = line[(line.IndexOf('>') + 2)..].Trim()
-                };
-            }
-        }
-
         private static IEnumerable<IEnumerable<HammerAndPosition>> LoadForgeSequences()
         {
             foreach (string line in LoadEmbeddedFile("11_keymaker_recipe").Split('\n').Where(x => !string.IsNullOrEmpty(x)))
