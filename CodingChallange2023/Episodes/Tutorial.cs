@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using TextUserInterface.Attributes;
 using static TextUserInterface.HelperFunctions;
+using static CodingChallange2023.Logic.HelperFunctions;
+using static CodingChallange2023.Logic.Constants;
 
 namespace CodingChallange2023.Episodes
 {
@@ -23,6 +25,7 @@ namespace CodingChallange2023.Episodes
         }
 
         #region Puzzle 1
+        [Authors(AUTHOR_MAIN, AUTHOR_SIDEKICK_1)]
         [State(StateAttribute.Types.Complete)]
         public static void Puzzle1()
         {
@@ -131,6 +134,7 @@ namespace CodingChallange2023.Episodes
         #endregion
 
         #region Puzzle 3
+        [Authors(AUTHOR_MAIN, AUTHOR_SIDEKICK_1)]
         [State(StateAttribute.Types.Complete)]
         public static void Puzzle3()
         {
@@ -162,30 +166,7 @@ namespace CodingChallange2023.Episodes
         public static void Story()
         {
             Console.WriteLine($"\t- By overlaying all three plates on the \"cipher_matrix.png\" we see the following symbols...\n\n");
-
-            IEnumerable<string> symbols = LoadSymobls();
-
-            int spacesBetweenSymbols = 7;
-
-            for (int i = 0; i < symbols.First().Split('\n').Length; i++)
-            {
-                Console.WriteLine($"\t  {string.Join(new string(' ', spacesBetweenSymbols), symbols.Select(x => x.Split('\n')[i].PadRight(15)))}");
-            }
-        }
-
-        private static IEnumerable<string> LoadSymobls()
-        {
-            string file = LoadEmbeddedFile("story_plates");
-
-            int symbolHeight = 7;
-            int linesBetweenSymbols = 1;
-            int skip = 0;
-
-            for (int i = 0; i < (int)Math.Ceiling((double)file.Split('\n').Length / (symbolHeight + linesBetweenSymbols)); i++)
-            {
-                yield return string.Join('\n', file.Split('\n').Skip(skip).Take(symbolHeight));
-                skip += symbolHeight + linesBetweenSymbols;
-            }
+            EchoSymbols(LoadSymoblsFromEmbeddedFile("story_plates_tut"));
         }
         #endregion
     }

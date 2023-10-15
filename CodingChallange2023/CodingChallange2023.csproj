@@ -18,7 +18,8 @@
     <None Remove="Resources\11_keymaker_recipe.txt" />
     <None Remove="Resources\13_trap_balance.txt" />
     <None Remove="Resources\hammer_collection.txt" />
-    <None Remove="Resources\story_plates.txt" />
+    <None Remove="Resources\story_plates_c1.txt" />
+    <None Remove="Resources\story_plates_tut.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,7 +30,8 @@
     <EmbeddedResource Include="Resources\11_keymaker_recipe.txt" />
     <EmbeddedResource Include="Resources\13_trap_balance.txt" />
     <EmbeddedResource Include="Resources\hammer_collection.txt" />
-    <EmbeddedResource Include="Resources\story_plates.txt" />
+    <EmbeddedResource Include="Resources\story_plates_c1.txt" />
+    <EmbeddedResource Include="Resources\story_plates_tut.txt" />
   </ItemGroup>
 
   <ItemGroup>
