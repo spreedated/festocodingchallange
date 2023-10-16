@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using static Crayon.Output;
 
 namespace TextUserInterface
 {
     public static class EngineBasics
     {
-        public readonly static Dictionary<string,string> foregroundColors = new();
+        public readonly static Dictionary<string, string> foregroundColors = new();
         public static void DisplayProgramHeader(string heading)
         {
             StringBuilder sb = new();
@@ -79,7 +78,7 @@ namespace TextUserInterface
             sb.Append("\tPress any key to return ...");
 
             DisplayColoredBlocks(sb);
-            
+
             Console.ReadKey();
         }
 
@@ -94,7 +93,7 @@ namespace TextUserInterface
             sb.Append($"{new string(' ', Console.BufferWidth / 4)}▐{new string('█', (Console.BufferWidth - 2) / 16)}▌{new string(' ', ((Console.BufferWidth) / 16) + (text.Length / 2) - 4)}{text}{new string(' ', ((Console.BufferWidth) / 16) + 4)}▐{new string('█', (Console.BufferWidth - 2) / 16)}▌\n");
             sb.Append($"{new string(' ', Console.BufferWidth / 4)}▐{new string('█', (Console.BufferWidth - 2) / 2)}▌\n");
             sb.Append($"{new string(' ', Console.BufferWidth / 4)}▐{new string('█', (Console.BufferWidth - 2) / 2)}▌\n");
-            sb.Append($"{new string('\n',4)}");
+            sb.Append($"{new string('\n', 4)}");
 
             Console.Write(sb.ToString());
 
