@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static Crayon.Output;
@@ -9,6 +10,7 @@ namespace TextUserInterface
 {
     public static class EngineBasics
     {
+        public readonly static Dictionary<string,string> foregroundColors = new();
         public static void DisplayProgramHeader(string heading)
         {
             StringBuilder sb = new();
@@ -26,23 +28,33 @@ namespace TextUserInterface
 
         private static void DisplayColoredBlocks(StringBuilder sb)
         {
+            if (!foregroundColors.Any())
+            {
+                foreach (PropertyInfo p in typeof(ConsoleEscapeSequences).GetProperties(BindingFlags.Public | BindingFlags.Static).Where(x => x.Name.ToLower().StartsWith("foreground")))
+                {
+                    foregroundColors.Add(p.Name.Replace("Foreground", ""), (string)p.GetValue(null));
+                }
+            }
+
+            StringBuilder s = new();
+
             foreach (char c in sb.ToString())
             {
                 if (c == '█' || c == '▐' || c == '▌')
                 {
                     Random rnd = new(BitConverter.ToInt32(Guid.NewGuid().ToByteArray()));
-                    Console.ForegroundColor = (ConsoleColor)rnd.Next(0, Enum.GetValues(typeof(ConsoleColor)).Cast<int>().Max());
-                    Console.Write(c);
+                    s.Append($"{foregroundColors.ToArray()[rnd.Next(0, foregroundColors.Count - 1)].Value}{c}");
                     continue;
                 }
                 if (c == '▀' || c == ' ')
                 {
-                    Console.Write(c);
+                    s.Append(c);
                     continue;
                 }
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.Write(c);
+                s.Append($"{foregroundColors["White"]}{c}");
             }
+
+            Console.Write(s.ToString());
         }
 
         /// <summary>
