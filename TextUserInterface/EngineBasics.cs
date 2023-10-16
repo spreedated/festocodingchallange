@@ -9,7 +9,7 @@ namespace TextUserInterface
 {
     public static class EngineBasics
     {
-        public readonly static Dictionary<string, string> foregroundColors = new();
+        private static KeyValuePair<string, string>[] foregroundColors;
         public static void DisplayProgramHeader(string heading)
         {
             StringBuilder sb = new();
@@ -27,11 +27,14 @@ namespace TextUserInterface
 
         private static void DisplayColoredBlocks(StringBuilder sb)
         {
-            if (!foregroundColors.Any())
+            if (foregroundColors == null)
             {
-                foreach (PropertyInfo p in typeof(ConsoleEscapeSequences).GetProperties(BindingFlags.Public | BindingFlags.Static).Where(x => x.Name.ToLower().StartsWith("foreground")))
+                PropertyInfo[] props = typeof(ConsoleEscapeSequences).GetProperties(BindingFlags.Public | BindingFlags.Static).Where(x => x.Name.ToLower().StartsWith("foreground")).ToArray();
+                foregroundColors = new KeyValuePair<string, string>[props.Length];
+
+                for (int i = 0; i < props.Length; i++)
                 {
-                    foregroundColors.Add(p.Name.Replace("Foreground", ""), (string)p.GetValue(null));
+                    foregroundColors[i] = new(props[i].Name.Replace("Foreground", ""), (string)props[i].GetValue(null));
                 }
             }
 
@@ -42,7 +45,7 @@ namespace TextUserInterface
                 if (c == '█' || c == '▐' || c == '▌')
                 {
                     Random rnd = new(BitConverter.ToInt32(Guid.NewGuid().ToByteArray()));
-                    s.Append($"{foregroundColors.ToArray()[rnd.Next(0, foregroundColors.Count - 1)].Value}{c}");
+                    s.Append($"{foregroundColors.ToArray()[rnd.Next(0, foregroundColors.Length - 1)].Value}{c}");
                     continue;
                 }
                 if (c == '▀' || c == ' ')
@@ -50,7 +53,7 @@ namespace TextUserInterface
                     s.Append(c);
                     continue;
                 }
-                s.Append($"{foregroundColors["White"]}{c}");
+                s.Append($"{Array.Find(foregroundColors, x => x.Key == "White").Value}{c}");
             }
 
             Console.Write(s.ToString());
