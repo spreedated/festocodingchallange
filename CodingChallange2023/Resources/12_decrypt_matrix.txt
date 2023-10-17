@@ -1,0 +1,10 @@
+input: YXXXXXXX; YXXXXXXX; G; Q; output: 0
+input: YXXXXXXY; YXXXXXXX; G; Q; output: 1
+input: YYXXXXXX; YYYXXXXY; G; Q; output: 10100001
+input: XXXXXXXX; XXXXXXXY; L; Q; output: 11111111
+input: XXXXYYXY; XXXXYYYY; L; Q; output: 11111110
+input: XYYYXXXX; YYYYXXXX; L; Q; output: 10000000
+input: YXXXYXYX; YXXXYXXY; G; Q; output: 10011
+input: YYXXXXYY; YYYXYXXY; L; Q; output: 11011010
+input: YYXXXXXX; YYYXXYYY; G; Q; output: 10100111
+input: XYXXXXXX; YXXYYYYY; L; Q; output: 10100001

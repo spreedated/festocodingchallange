@@ -36,15 +36,8 @@ namespace CodingChallange2023.Episodes
             IEnumerable<string> possibleKeyList = LoadPossibleKeys();
             Console.WriteLine($"\t- Loaded {possibleKeyList.Count()} possible keys from \"21_keymaker_forge.txt\"...");
 
-            List<string> idspossibleKeys = new();
-
-            foreach(Hammer hammer in hammerList)
-            {
-                idspossibleKeys.AddRange(possibleKeyList.Where(x => x.Contains(hammer.ConvertTo)).Except(idspossibleKeys));
-            }
-
-            var ss = possibleKeyList.Where(x => x.Contains(hammerList.ToArray()[0].ConvertTo));
-            var pp = possibleKeyList.Count(x => x.Length % 2 != 0);
+            bool dd = IsKeyLegit("FFFADCFAF", hammerList);
+            bool dsd = IsKeyLegit("AFDFCDAFFE", hammerList);
         }
 
         private static IEnumerable<string> LoadPossibleKeys()
@@ -53,6 +46,29 @@ namespace CodingChallange2023.Episodes
             {
                 yield return line;
             }
+        }
+
+        private static bool IsKeyLegit(string key, IEnumerable<Hammer> hammerList)
+        {
+            string reversedEngineeredKey = key;
+            bool areMatchingHammersFound = true;
+            Stack<string> reversedKeys = new();
+
+            while (areMatchingHammersFound)
+            {
+                areMatchingHammersFound = hammerList.Select(x => x.ConvertTo).Any(y => reversedEngineeredKey.Contains(y));
+
+                foreach (Hammer hammer in hammerList)
+                {
+                    if (key.Contains(hammer.ConvertTo))
+                    {
+                        reversedEngineeredKey = reversedEngineeredKey.Replace(hammer.ConvertTo, "");
+                        reversedKeys.Push(hammer.HammerType.ToString());
+                    }
+                }
+            }
+
+            return true;
         }
         #endregion
 
