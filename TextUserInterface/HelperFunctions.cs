@@ -28,7 +28,7 @@ namespace TextUserInterface
 
             if (input == "x" || input == "X")
             {
-                Environment.Exit(0);
+                EngineBasics.DisplayEnd();
             }
 
             if (input == "a" || input == "A")

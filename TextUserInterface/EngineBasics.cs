@@ -88,17 +88,25 @@ namespace TextUserInterface
         public static void DisplayEnd()
         {
             StringBuilder sb = new();
-            string text = "Thank you for using!";
+            string text = "\nThank you for using!\n\n\nVisit our github repo:\n\nhttps://github.com/spreedated/festocodingchallange\n";
+
+            int barWidth = (Console.BufferWidth - 2) / 2;
 
             sb.Append("\n\n\n");
-            sb.Append($"{new string(' ', Console.BufferWidth / 4)}▐{new string('█', (Console.BufferWidth - 2) / 2)}▌\n");
-            sb.Append($"{new string(' ', Console.BufferWidth / 4)}▐{new string('█', (Console.BufferWidth - 2) / 2)}▌\n");
-            sb.Append($"{new string(' ', Console.BufferWidth / 4)}▐{new string('█', (Console.BufferWidth - 2) / 16)}▌{new string(' ', ((Console.BufferWidth) / 16) + (text.Length / 2) - 4)}{text}{new string(' ', ((Console.BufferWidth) / 16) + 4)}▐{new string('█', (Console.BufferWidth - 2) / 16)}▌\n");
-            sb.Append($"{new string(' ', Console.BufferWidth / 4)}▐{new string('█', (Console.BufferWidth - 2) / 2)}▌\n");
-            sb.Append($"{new string(' ', Console.BufferWidth / 4)}▐{new string('█', (Console.BufferWidth - 2) / 2)}▌\n");
+            sb.Append($"{new string(' ', Console.BufferWidth / 4)}▐{new string('█', barWidth)}▌\n");
+            sb.Append($"{new string(' ', Console.BufferWidth / 4)}▐{new string('█', barWidth)}▌\n");
+
+            foreach (string line in text.Split('\n'))
+            {
+                sb.Append($"{new string(' ', (Console.BufferWidth / 2) - (line.Length / 2))}{line}\n");
+            }
+
+            sb.Append($"{new string(' ', Console.BufferWidth / 4)}▐{new string('█', barWidth)}▌\n");
+            sb.Append($"{new string(' ', Console.BufferWidth / 4)}▐{new string('█', barWidth)}▌\n");
             sb.Append($"{new string('\n', 4)}");
 
-            Console.Write(sb.ToString());
+            Console.Clear();
+            DisplayColoredBlocks(sb);
 
             Environment.Exit(0);
         }

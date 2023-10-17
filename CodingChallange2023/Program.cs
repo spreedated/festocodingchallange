@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using TextUserInterface.Attributes;
 using static TextUserInterface.EngineBasics;
 using static TextUserInterface.HelperFunctions;
@@ -20,7 +15,6 @@ namespace CodingChallange2023
 
         static void Main(string[] args)
         {
-            //DisplayEnd(); //TODO: complete this function
             title = typeof(Program).Assembly.GetCustomAttribute<AssemblyTitleAttribute>().Title;
             Console.Clear();
             DisplayProgramHeader(title);
@@ -135,7 +129,7 @@ namespace CodingChallange2023
 
             MethodInfo[] methods = selectedChapter.GetMethods().Where(x => x.GetCustomAttributes<StateAttribute>().Any()).OrderByDescending(x => x.Name[0]).ThenBy(x => x.Name).ToArray();
 
-            for(int i = 0; i < methods.Length; i++)
+            for (int i = 0; i < methods.Length; i++)
             {
                 StateAttribute st = methods[i].GetCustomAttribute<StateAttribute>();
                 AuthorsAttribute at = methods[i].GetCustomAttribute<AuthorsAttribute>();
