@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <Title>Festo Coding Challange 2023</Title>
+    <AssemblyTitle>Festo Coding Challange 2023</AssemblyTitle>
+    <NoWarn>1701;1702;IDE0063</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\01_keymaker_ordered.txt" />
+    <None Remove="Resources\02_crypted.txt" />
+    <None Remove="Resources\02_encryption_matrix.txt" />
+    <None Remove="Resources\03_trap_logs.txt" />
+    <None Remove="Resources\11_keymaker_recipe.txt" />
+    <None Remove="Resources\12_decrypt_matrix.txt" />
+    <None Remove="Resources\12_decrypt_matrix_checkpoint.txt" />
+    <None Remove="Resources\13_trap_balance.txt" />
+    <None Remove="Resources\21_keymaker_forge.txt" />
+    <None Remove="Resources\23_trap_right_side.txt" />
+    <None Remove="Resources\hammer_collection.txt" />
+    <None Remove="Resources\story_plates_c1.txt" />
+    <None Remove="Resources\story_plates_tut.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\01_keymaker_ordered.txt" />
+    <EmbeddedResource Include="Resources\02_crypted.txt" />
+    <EmbeddedResource Include="Resources\02_encryption_matrix.txt" />
+    <EmbeddedResource Include="Resources\03_trap_logs.txt" />
+    <EmbeddedResource Include="Resources\11_keymaker_recipe.txt" />
+    <EmbeddedResource Include="Resources\12_decrypt_matrix.txt" />
+    <EmbeddedResource Include="Resources\12_decrypt_matrix_checkpoint.txt" />
+    <EmbeddedResource Include="Resources\13_trap_balance.txt" />
+    <EmbeddedResource Include="Resources\21_keymaker_forge.txt" />
+    <EmbeddedResource Include="Resources\23_trap_right_side.txt" />
+    <EmbeddedResource Include="Resources\hammer_collection.txt" />
+    <EmbeddedResource Include="Resources\story_plates_c1.txt" />
+    <EmbeddedResource Include="Resources\story_plates_tut.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TextUserInterface\TextUserInterface.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Crayon">
+      <HintPath>..\Libraries\Crayon.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

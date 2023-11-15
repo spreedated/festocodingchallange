@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <Title>Festo Coding Challange 2020</Title>
+    <AssemblyTitle>Festo Coding Challange 2020</AssemblyTitle>
+    <NoWarn>1701;1702;IDE0063</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Resources\**" />
+    <EmbeddedResource Remove="Resources\**" />
+    <None Remove="Resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TextUserInterface\TextUserInterface.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Crayon">
+      <HintPath>..\Libraries\Crayon.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

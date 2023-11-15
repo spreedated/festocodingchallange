@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <NoWarn>1701;1702;IDE0063</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Crayon">
+      <HintPath>..\Libraries\Crayon.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
